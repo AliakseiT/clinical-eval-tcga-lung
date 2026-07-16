@@ -1,15 +1,44 @@
-# Offline demo uses the deterministic fake model (echoes the salient input), so
-# the pack runs with no endpoint and demonstrates the INSTRUMENT (input contract,
-# information-value curves) on real inputs. Swap for an openai_compat binding to
-# validate a real model on a BAA'd / local endpoint.
+# The fake model (offline, deterministic) demonstrates the INSTRUMENT on real
+# inputs. The Gemini bindings run REAL models via Google's OpenAI-compatible
+# endpoint. The API key is read from the GEMINI_API_KEY environment variable —
+# only the variable NAME is stored here, never the key.
+#
+# NOTE on data governance: sending TCGA text to the public Gemini API is fine
+# ONLY because TCGA is public and de-identified. Real patient data requires a
+# BAA'd deployment (Vertex AI under BAA) or local inference — never the public API.
 suts:
   - id: fake-baseline
     kind: llm_call
     binding:
       model_id: fake
       model_version: "1"
-      system_prompt: >
-        Summarize the lung-adenocarcinoma record for a molecular tumor board:
-        histological diagnosis, AJCC stage, and any actionable molecular alteration.
+      system_prompt: &sys >
+        You are preparing a molecular tumor board brief for a lung-adenocarcinoma
+        case. State the histological diagnosis, the AJCC stage, and any actionable
+        molecular alteration, each grounded in the provided record. Be concise.
       params:
         temperature: 0
+
+  - id: gemini-2.5-flash
+    kind: llm_call
+    binding:
+      model_id: gemini-2.5-flash
+      model_version: "2.5-flash"
+      endpoint: https://generativelanguage.googleapis.com/v1beta/openai/chat/completions
+      api_key_env: GEMINI_API_KEY
+      system_prompt: *sys
+      params:
+        temperature: 0
+        max_tokens: 2048
+
+  - id: gemini-2.5-pro
+    kind: llm_call
+    binding:
+      model_id: gemini-2.5-pro
+      model_version: "2.5-pro"
+      endpoint: https://generativelanguage.googleapis.com/v1beta/openai/chat/completions
+      api_key_env: GEMINI_API_KEY
+      system_prompt: *sys
+      params:
+        temperature: 0
+        max_tokens: 2048

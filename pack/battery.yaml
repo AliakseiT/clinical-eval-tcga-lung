@@ -1,8 +1,38 @@
 batteries:
+  # Offline instrument demo (fake model): input contract + info-value on real data.
   - id: smoke
     version: "1"
     cases: all
     perturbations: all
     axes: ["ablation", "format"]
     suts: ["fake-baseline"]
+    n_samples: 1
+
+  # Quick real-model inspection: one model, baseline only (no ablation), 8 units.
+  - id: gemini_smoke
+    version: "1"
+    cases: all
+    perturbations: all
+    axes: ["format"]
+    suts: ["gemini-2.5-flash"]
+    n_samples: 1
+
+  # Input contract on a REAL model: ablation + format on gemini-2.5-flash, so the
+  # information-value curve reflects a real model's real behaviour (32 units).
+  - id: gemini_contract
+    version: "1"
+    cases: all
+    perturbations: all
+    axes: ["ablation", "format"]
+    suts: ["gemini-2.5-flash"]
+    n_samples: 1
+
+  # Real model comparison (a model *change* -> RegressionDiff): stronger vs weaker.
+  # Baseline only (no ablation) to bound API usage: 8 cases x 2 models.
+  - id: gemini_compare
+    version: "1"
+    cases: all
+    perturbations: all
+    axes: ["format"]
+    suts: ["gemini-2.5-flash", "gemini-2.5-pro"]
     n_samples: 1

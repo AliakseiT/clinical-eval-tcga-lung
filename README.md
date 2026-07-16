@@ -47,6 +47,44 @@ harness ui  pack --out ./runs           # adjudicate cases / calibrate (needs th
    regression diff against the physician's standard. ("You set the truth; the
    harness measures the model against it.")
 
+## Real-model results (Google Gemini)
+
+Run against real Gemini models via the OpenAI-compatible endpoint (needs
+`GEMINI_API_KEY`; grading by a pinned, reference-aware `gemini-flash-lite-latest`
+judge). Two runnable scripts:
+
+```bash
+GEMINI_API_KEY=... python run_gemini_eval.py       # validate + compare two models
+GEMINI_API_KEY=... python run_gemini_contract.py   # input contract on a real model
+```
+
+**Validation + model comparison** (`gemini_compare`, 8 baseline cases):
+
+| Model | mean score | acceptance |
+|---|---|---|
+| gemini-2.5-pro  | 1.00 | PASS |
+| gemini-2.5-flash| 1.00 | PASS |
+
+RegressionDiff `pro → flash`: **no regression** (Δ 0.00). Real finding: on this
+extraction task **the cheaper flash matches pro** — switch and save cost with no
+measured loss. (A model swap is a *change event* → a QMS change request is
+emitted, not a monitoring "trend".)
+
+**Input contract on the real model** (`gemini_contract`, gemini-2.5-flash,
+ablation): information value — `pathology_report` **0.00**, `clinical_summary`
+0.04, `molecular_report` **0.21**; minimal sufficient set = **`molecular_report`
+only**. Real finding worth discussing with clinicians: the model still states the
+diagnosis and stage *even when those inputs are withheld* (it infers them from
+context) — only the specific molecular driver genuinely requires its input. This
+is the opposite of the fake-model contract above, and surfaces a grounding /
+confabulation question the tumor board should weigh.
+
+**Monitoring, honestly:** M5 is already complete as an engine capability. A real
+validation run is **not** production telemetry, so `run_gemini_eval.py` prints a
+clearly-labelled *projection* of the override rate you would expect if the weaker
+model were deployed (modelled from its measured error) — the *shape* of signal
+M5 consumes, never a claim of real monitoring.
+
 ## Honest notes for the conversation
 
 - **8 LUAD cases**; the molecular driver (EGFR/KRAS/BRAF/ERBB2 …) is present in
