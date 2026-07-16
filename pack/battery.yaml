@@ -1,0 +1,8 @@
+batteries:
+  - id: smoke
+    version: "1"
+    cases: all
+    perturbations: all
+    axes: ["ablation", "format"]
+    suts: ["fake-baseline"]
+    n_samples: 1

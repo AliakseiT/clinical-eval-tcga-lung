@@ -1,0 +1,15 @@
+# Offline demo uses the deterministic fake model (echoes the salient input), so
+# the pack runs with no endpoint and demonstrates the INSTRUMENT (input contract,
+# information-value curves) on real inputs. Swap for an openai_compat binding to
+# validate a real model on a BAA'd / local endpoint.
+suts:
+  - id: fake-baseline
+    kind: llm_call
+    binding:
+      model_id: fake
+      model_version: "1"
+      system_prompt: >
+        Summarize the lung-adenocarcinoma record for a molecular tumor board:
+        histological diagnosis, AJCC stage, and any actionable molecular alteration.
+      params:
+        temperature: 0

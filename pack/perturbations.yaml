@@ -1,0 +1,14 @@
+# Mutation axes precede the rendering axis.
+axes:
+  ablation:
+    - id: baseline
+      drop: []
+    - id: no_pathology
+      drop: ["pathology_report"]
+    - id: no_clinical
+      drop: ["clinical_summary"]
+    - id: no_molecular
+      drop: ["molecular_report"]
+  format:
+    - id: structured
+      style: structured

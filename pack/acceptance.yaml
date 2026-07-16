@@ -1,0 +1,3 @@
+thresholds:
+  critical_omission_rate_max: 0.10
+  mean_score_min: 0.60

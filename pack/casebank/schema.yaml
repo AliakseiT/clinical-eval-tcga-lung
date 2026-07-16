@@ -1,0 +1,19 @@
+elements:
+  - name: pathology_report
+    type: text
+    modality: pathology
+    language: en
+    source_system: TCGA
+    required: true
+  - name: clinical_summary
+    type: text
+    modality: structured_clinical
+    language: en
+    source_system: TCGA
+    required: true
+  - name: molecular_report
+    type: text
+    modality: genomics
+    language: en
+    source_system: cBioPortal
+    required: false
