@@ -112,6 +112,22 @@ gold-annotated data such as i2b2/n2c2, DUA-gated). The value is establishing the
 boundary + a per-type, measured, reproducible record; a higher-recall domain NER
 (OpenMed) is the next step only if the measured gap justifies it.
 
+### Enforced ingestion exists in the engine — but is not exercised here
+
+The engine ships an **enforced ingestion boundary** (`harness ingest`): raw case →
+pseudonymize → casebank, with structured-field PII classes
+(`identifier` / `free_text` / `non_phi`) and a fail-closed residual gate that
+refuses to write a case if a declared identifier survives anywhere in it. Re-id
+material is kept hospital-side, never in the store.
+
+**That path is deliberately not run in this demo.** TCGA-LUAD is *already
+de-identified* and has **no structured identifier field** (no MRN, name, or
+accession element) — so the identifier-capture → scrub → fail-closed flow has
+nothing to act on here. Exercising it would only show NER on free text, which the
+recall record above already measures directly. The enforcement is tested in the
+engine (unit + live end-to-end); this repo simply doesn't have the input shape
+that would make it meaningful.
+
 ## Honest notes for the conversation
 
 - **8 LUAD cases**; the molecular driver (EGFR/KRAS/BRAF/ERBB2 …) is present in
