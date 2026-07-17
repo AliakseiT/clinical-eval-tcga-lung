@@ -11,6 +11,7 @@ longer state the diagnosis, etc. Requires GEMINI_API_KEY.
 from __future__ import annotations
 
 import os
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -36,12 +37,13 @@ def main() -> int:
                    endpoint=GEMINI_ENDPOINT, api_key_env="GEMINI_API_KEY"),
         GradingConfig(include_document=True, include_reference=True),
     )
+    battery = sys.argv[1] if len(sys.argv) > 1 else "gemini_contract"
     now = lambda: datetime.now(timezone.utc).replace(microsecond=0).isoformat()
-    print("Running gemini_contract (gemini-2.5-flash, ablation) ...")
-    r = run_battery(pack, "gemini_contract", store, seed=1, now=now, judge=judge)[0]
-    print(f"\nrun={r.run_id} units={r.n_units} acceptance="
+    print(f"Running {battery} (ablation) ...")
+    r = run_battery(pack, battery, store, seed=1, now=now, judge=judge)[0]
+    print(f"\nrun={r.run_id} sut={r.sut_id} units={r.n_units} acceptance="
           f"{'PASS' if r.report['acceptance']['overall_pass'] else 'FAIL'}")
-    print("\n=== INPUT CONTRACT on gemini-2.5-flash (real model, real data) ===")
+    print(f"\n=== INPUT CONTRACT on {r.sut_id} (real model, real data) ===")
     for e in r.contract["elements"]:
         iv = e["information_value"]
         print(f"  {e['name']:20} measured={e['measured']!s:5} "

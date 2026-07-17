@@ -27,6 +27,15 @@ batteries:
     suts: ["gemini-2.5-flash"]
     n_samples: 1
 
+  # Same contract battery on the newer model version, for a second dossier.
+  - id: gemini_contract_35
+    version: "1"
+    cases: all
+    perturbations: all
+    axes: ["ablation", "format"]
+    suts: ["gemini-3.5-flash"]
+    n_samples: 1
+
   # Real model comparison (a model *change* -> RegressionDiff): stronger vs weaker.
   # Baseline only (no ablation) to bound API usage: 8 cases x 2 models.
   - id: gemini_compare
