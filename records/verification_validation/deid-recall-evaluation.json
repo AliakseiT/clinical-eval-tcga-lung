@@ -1,0 +1,86 @@
+{
+  "baseline": {
+    "config": {
+      "backend": "presidio",
+      "clinical_recognizers": false,
+      "model": "en_core_web_sm",
+      "n_phi_types": 6
+    },
+    "config_hash": "1a1e08a9083a69e7f72773b57e31020ddea92779b5d72d0cf29d9eb423f157bc",
+    "method": "Synthetic PHI injected into de-identified notes; leakage-recall = fraction of injected values absent from the pseudonymized output, per PHI type. UPPER BOUND (synthetic-in-slot is easier than organic PHI; TCGA is already de-identified). Ground-truth real-note recall needs gold-annotated data (i2b2/n2c2, DUA-gated). 'Absent' is a leakage proxy, not span-level detection.",
+    "n_notes": 8,
+    "overall_recall": 0.8571428571428571,
+    "per_type_recall": {
+      "CH_AHV": {
+        "n": 8,
+        "recall": 0.0
+      },
+      "DATE_TIME": {
+        "n": 8,
+        "recall": 1.0
+      },
+      "EMAIL_ADDRESS": {
+        "n": 8,
+        "recall": 1.0
+      },
+      "LOCATION": {
+        "n": 8,
+        "recall": 1.0
+      },
+      "MEDICAL_RECORD_NUMBER": {
+        "n": 8,
+        "recall": 1.0
+      },
+      "PERSON": {
+        "n": 16,
+        "recall": 1.0
+      }
+    },
+    "record_type": "deid_recall_evaluation",
+    "schema_version": 1,
+    "utility_n": 15,
+    "utility_retention": 1.0
+  },
+  "with_clinical": {
+    "config": {
+      "backend": "presidio",
+      "clinical_recognizers": true,
+      "model": "en_core_web_sm",
+      "n_phi_types": 6
+    },
+    "config_hash": "1fe696d4a192d68ea0ccce360bdb800555f739072ae42421b2f989fc6fe13b29",
+    "method": "Synthetic PHI injected into de-identified notes; leakage-recall = fraction of injected values absent from the pseudonymized output, per PHI type. UPPER BOUND (synthetic-in-slot is easier than organic PHI; TCGA is already de-identified). Ground-truth real-note recall needs gold-annotated data (i2b2/n2c2, DUA-gated). 'Absent' is a leakage proxy, not span-level detection.",
+    "n_notes": 8,
+    "overall_recall": 1.0,
+    "per_type_recall": {
+      "CH_AHV": {
+        "n": 8,
+        "recall": 1.0
+      },
+      "DATE_TIME": {
+        "n": 8,
+        "recall": 1.0
+      },
+      "EMAIL_ADDRESS": {
+        "n": 8,
+        "recall": 1.0
+      },
+      "LOCATION": {
+        "n": 8,
+        "recall": 1.0
+      },
+      "MEDICAL_RECORD_NUMBER": {
+        "n": 8,
+        "recall": 1.0
+      },
+      "PERSON": {
+        "n": 16,
+        "recall": 1.0
+      }
+    },
+    "record_type": "deid_recall_evaluation",
+    "schema_version": 1,
+    "utility_n": 15,
+    "utility_retention": 1.0
+  }
+}

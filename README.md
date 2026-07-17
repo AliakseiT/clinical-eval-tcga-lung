@@ -1,8 +1,9 @@
 # clinical-eval-tcga-lung
 
-An **example project repo produced by the Harness Factory** — a toy, real-data
-evaluation pack for a lung-adenocarcinoma molecular tumor board, meant for
-showing clinicians what the harness measures.
+An **example project repo produced by the Harness Factory** — a real-data
+demonstration for a lung-adenocarcinoma molecular tumor board. The whole repo is
+the example; the documents *inside* it (under `records/`) are stored exactly as
+they would be in a real deployment, not as "examples".
 
 It follows the factory's two-repo model: the **engine** ([harness-factory](https://github.com/AliakseiT/clinical-llm-eval-engine))
 is use-case-agnostic; this **project repo** holds one intended use — a pack, an
@@ -87,6 +88,29 @@ validation run is **not** production telemetry, so `run_gemini_eval.py` prints a
 clearly-labelled *projection* of the override rate you would expect if the weaker
 model were deployed (modelled from its measured error) — the *shape* of signal
 M5 consumes, never a claim of real monitoring.
+
+## De-identification recall (ingestion boundary)
+
+The ingestion boundary pseudonymizes source text before it reaches the engine
+(lightweight Presidio: small spaCy model + regex + clinical/Swiss recognizers,
+reversible `encrypt`, key from env — no HF/transformer models). Its redaction is
+*measured*, not assumed:
+
+```bash
+python run_deid_eval.py     # -> records/verification_validation/deid-recall-evaluation.md
+```
+
+It injects synthetic PHI into the real TCGA-LUAD notes and reports **per-PHI-type
+leakage-recall** before/after the clinical recognizers, plus **clinical-signal
+retention** (does EGFR/KRAS/stage survive?). On this config: overall **86% →
+100%** (the lift is the Swiss AHV: 0% → 100%), retention **100%**.
+
+**Read the caveat in the record:** this is an *upper bound* on synthetic
+injections in a header slot — organic clinical PHI is harder, and TCGA is already
+de-identified, so it is not ground-truth real-note recall (that needs
+gold-annotated data such as i2b2/n2c2, DUA-gated). The value is establishing the
+boundary + a per-type, measured, reproducible record; a higher-recall domain NER
+(OpenMed) is the next step only if the measured gap justifies it.
 
 ## Honest notes for the conversation
 
