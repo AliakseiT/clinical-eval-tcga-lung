@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Real-model demo: validate + compare two Gemini models on the TCGA-LUAD pack.
 
-Runs `gemini_compare` (gemini-2.5-pro vs gemini-2.5-flash) via Google's
+Runs `gemini_compare` (gemini-2.5-flash vs gemini-3.5-flash) via Google's
 OpenAI-compatible endpoint, grades the free-text output with a pinned,
 reference-aware LLM judge, and produces:
   1. per-model validation scores,
@@ -67,10 +67,10 @@ def main() -> int:
         print(f"  {sut_id:24} mean_score={ms:.3f}  judge_errors={errs}  "
               f"acceptance={'PASS' if r.report['acceptance']['overall_pass'] else 'FAIL'}")
 
-    strong, weak = by_sut["gemini-2.5-pro"], by_sut["gemini-2.5-flash"]
-    diff = diff_runs(store, strong.run_id, weak.run_id)
+    baseline, candidate = by_sut["gemini-2.5-flash"], by_sut["gemini-3.5-flash"]
+    diff = diff_runs(store, baseline.run_id, candidate.run_id)
     agg = diff["aggregate"]
-    print("\n=== RegressionDiff: gemini-2.5-pro -> gemini-2.5-flash (a model change) ===")
+    print("\n=== RegressionDiff: gemini-2.5-flash -> gemini-3.5-flash (new model version) ===")
     print(f"  mean score {agg['mean_score_baseline']:.3f} -> {agg['mean_score_candidate']:.3f} "
           f"(delta {agg['delta']:+.3f}, {'significant' if agg['significant'] else 'not significant'})")
     print(f"  item regressions={diff['n_regressions']} improvements={diff['n_improvements']}")
@@ -85,15 +85,19 @@ def main() -> int:
     print(f"\n  QMS change request written: {qms_dir / 'model_swap_change_request.json'}")
 
     # --- Monitoring PROJECTION (clearly labeled; not real telemetry) ----------
-    weak_grades = store.read_grades(weak.run_id)
+    candidate_grades = store.read_grades(candidate.run_id)
     critical = [i.id for i in pack.rubric.items if i.critical]
-    n = len(weak_grades)
+    n = len(candidate_grades)
+    # A critical item counts as an override ONLY if it was actually graded and
+    # scored 0. An item the judge could not grade (judge_error -> absent from
+    # item_scores) is unknown, never a failure.
     projected_overrides = sum(
-        1 for g in weak_grades if any(g.item_scores.get(c, 0.0) <= 0 for c in critical)
+        1 for g in candidate_grades
+        if any(c in g.item_scores and g.item_scores[c] <= 0 for c in critical)
     )
     print("\n=== MONITORING PROJECTION (modeled, NOT clinician telemetry) ===")
-    print(f"  If gemini-2.5-flash were deployed, projected clinician-override rate")
-    print(f"  (modeled as: a critical item the model got wrong on a case) = "
+    print(f"  If gemini-3.5-flash were deployed, projected clinician-override rate")
+    print(f"  (modeled as: a graded critical item the model got wrong; judge_errors excluded) = "
           f"{projected_overrides}/{n} = {projected_overrides/n:.2f}")
     print("  This is the SHAPE of signal M5 monitoring consumes; real override rates")
     print("  require production deployment and clinician-override capture.")

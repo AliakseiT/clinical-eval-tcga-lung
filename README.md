@@ -58,17 +58,20 @@ GEMINI_API_KEY=... python run_gemini_eval.py       # validate + compare two mode
 GEMINI_API_KEY=... python run_gemini_contract.py   # input contract on a real model
 ```
 
-**Validation + model comparison** (`gemini_compare`, 8 baseline cases):
+**Validation + version comparison** (`gemini_compare`, 8 baseline cases):
 
 | Model | mean score | acceptance |
 |---|---|---|
-| gemini-2.5-pro  | 1.00 | PASS |
-| gemini-2.5-flash| 1.00 | PASS |
+| gemini-2.5-flash | 1.00 | PASS |
+| gemini-3.5-flash | 1.00 | PASS |
 
-RegressionDiff `pro → flash`: **no regression** (Δ 0.00). Real finding: on this
-extraction task **the cheaper flash matches pro** — switch and save cost with no
-measured loss. (A model swap is a *change event* → a QMS change request is
-emitted, not a monitoring "trend".)
+RegressionDiff `2.5-flash → 3.5-flash` (a new model version): **no regression**
+(Δ 0.00, 0 item regressions / 0 improvements). Real finding: on this extraction
+task the new version is **at parity** — safe to upgrade with no measured loss.
+(A model version swap is a *change event* → a QMS change request is emitted, not
+a monitoring "trend".) Note: LLM judging is non-deterministic, so an occasional
+transient `judge_error` occurs; it is recorded distinctly and **excluded** from
+scores and the override projection (never counted as a failure).
 
 **Input contract on the real model** (`gemini_contract`, gemini-2.5-flash,
 ablation): information value — `pathology_report` **0.00**, `clinical_summary`

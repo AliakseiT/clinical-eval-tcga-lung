@@ -42,3 +42,15 @@ suts:
       params:
         temperature: 0
         max_tokens: 2048
+
+  - id: gemini-3.5-flash
+    kind: llm_call
+    binding:
+      model_id: gemini-3.5-flash
+      model_version: "3.5-flash"
+      endpoint: https://generativelanguage.googleapis.com/v1beta/openai/chat/completions
+      api_key_env: GEMINI_API_KEY
+      system_prompt: *sys
+      params:
+        temperature: 0
+        max_tokens: 2048
