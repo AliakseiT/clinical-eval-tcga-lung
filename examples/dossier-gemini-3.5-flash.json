@@ -170,8 +170,8 @@
         "meaning_of_signature": "Approved V&V Plan",
         "signatures": [],
         "signer_roles": [
-          "qa_lead",
-          "engineering_lead"
+          "medical_reviewer",
+          "quality_reviewer"
         ]
       },
       "software_safety_classification": "not_applicable_with_rationale",
@@ -289,8 +289,8 @@
       "meaning_of_signature": "Approved V&V Evidence and Report",
       "signatures": [],
       "signer_roles": [
-        "qa_lead",
-        "engineering_lead"
+        "medical_reviewer",
+        "quality_reviewer"
       ]
     },
     "summary_of_results": {

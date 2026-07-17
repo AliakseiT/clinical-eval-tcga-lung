@@ -134,7 +134,7 @@
       "linked_inputs": {
         "anomaly_records": [],
         "change_records": [],
-        "design_input_baseline_reference": "pack tcga-lung v0.1.0 (hash c0217d1bb070f30d)",
+        "design_input_baseline_reference": "pack tcga-lung v0.1.0 (hash 147f1a625a1f50bd)",
         "design_traceability_reference": "",
         "requirements": [
           "item_diagnosis",
@@ -170,8 +170,8 @@
         "meaning_of_signature": "Approved V&V Plan",
         "signatures": [],
         "signer_roles": [
-          "qa_lead",
-          "engineering_lead"
+          "medical_reviewer",
+          "quality_reviewer"
         ]
       },
       "software_safety_classification": "not_applicable_with_rationale",
@@ -289,8 +289,8 @@
       "meaning_of_signature": "Approved V&V Evidence and Report",
       "signatures": [],
       "signer_roles": [
-        "qa_lead",
-        "engineering_lead"
+        "medical_reviewer",
+        "quality_reviewer"
       ]
     },
     "summary_of_results": {
