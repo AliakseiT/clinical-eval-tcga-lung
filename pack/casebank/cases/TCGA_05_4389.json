@@ -1,0 +1,25 @@
+{
+  "case_id": "TCGA_05_4389",
+  "elements": {
+    "pathology_report": ": Mixed bronchopulmonary adenocarcinoma. Comment/supplementary remark: histoarchitecture and cell morphology of the tumor are consistent with a bronchopulmonary origin of the tumor. This will be reviewed and confirmed in immunohistological investigations. The tumor is completely removed by wedge excision of sample 1.). The visceral pleura, the right upper lobe of sample 2.), including its resection margin of the bronchus and vessels and all the lymph nodes removed are tumor-free. On the assumption of a bronchopulmonary origin to the tumor: Tumor classification: pT1, pN0, R0, stage IA.. C 34.1 M 8255/3.",
+    "clinical_summary": "Clinical summary (from TCGA structured data). Primary site: Upper lobe, lung. AJCC pathologic stage: Stage IA. TNM: T1 / N0 / M0. Smoking history: 43 pack-years.",
+    "molecular_report": "NGS panel (public TCGA / cBioPortal, luad_tcga). Somatic mutations detected: BRAF."
+  },
+  "ground_truth": {
+    "item_diagnosis": {
+      "evidence": [
+        "adenocarcinoma"
+      ]
+    },
+    "item_staging": {
+      "evidence": [
+        "Stage IA"
+      ]
+    },
+    "item_molecular": {
+      "evidence": [
+        "BRAF"
+      ]
+    }
+  }
+}

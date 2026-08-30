@@ -1,0 +1,25 @@
+{
+  "case_id": "TCGA_05_4249",
+  "elements": {
+    "pathology_report": "D iagnosis: 2. and 3. Two-part resection material from the right lower lobe with a peripheral, well differentiated papillary, non-mucigenous adenocarcinoma measuring a good 50 mm and extending as far as the visceral pleura that is just tumor-free, a tumor-free bronchial resection level and subpleural areas of scarring as well as pleural residues of adhesion. Tumor classification: M-8140/3, G 1, pT 2, pN 0, pMX, stage I B. R 0.",
+    "clinical_summary": "Clinical summary (from TCGA structured data). Primary site: Lower lobe, lung. AJCC pathologic stage: Stage IB. TNM: T2 / N0 / M0. Smoking history: 52 pack-years.",
+    "molecular_report": "NGS panel (public TCGA / cBioPortal, luad_tcga). Somatic mutations detected: BRAF, KRAS."
+  },
+  "ground_truth": {
+    "item_diagnosis": {
+      "evidence": [
+        "adenocarcinoma"
+      ]
+    },
+    "item_staging": {
+      "evidence": [
+        "Stage IB"
+      ]
+    },
+    "item_molecular": {
+      "evidence": [
+        "BRAF"
+      ]
+    }
+  }
+}
