@@ -19,7 +19,15 @@ All are **DRAFT / unsigned**; signer roles are clinical (medical + quality
 reviewer). Regenerate: `rig dossier …` (V&V) / `python run_deid_eval.py` (de-id).
 
 All records were regenerated 2026-08-30 from runs on the committed GDC-sourced
-casebank (runs `fbb6b102ea4b33cd` = gemini-2.5-flash `gemini_contract`,
-`a4ec2e5573b1b0cd` = gemini-3.5-flash `gemini_contract_35`, seed 1, judge
-`gemini-flash-lite-latest`, reference-aware), superseding the records generated
-from the earlier NC-ND-derived case text.
+casebank (runs `aa75fb2beedbe46e` = gemini-2.5-flash `gemini_contract`,
+`9d1cfd7827de6129` = gemini-3.5-flash `gemini_contract_35`, seed 1, pack_hash
+`8aacabc15a74db73…`), superseding the records generated from the earlier
+NC-ND-derived case text.
+
+The judge is now declared in the pack (`pack/judge.yaml`), so each record pins
+`judge_id: geval-gemini-flash-lite` — the reference-aware `gemini-flash-lite-latest`
+G-Eval judge that actually graded these runs. Records promoted before that change
+pinned `judge_id: fake-judge` while a real judge graded them, because the run
+scripts constructed the judge outside the pack; those records are superseded by
+these. Note that `gemini-flash-lite-latest` is a floating provider alias — the pin
+records the alias, not a resolved model build.

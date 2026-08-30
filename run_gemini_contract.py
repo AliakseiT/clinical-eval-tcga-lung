@@ -2,10 +2,12 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Extract the input contract from a REAL model (gemini-2.5-flash) on TCGA-LUAD.
 
-Runs the `gemini_contract` battery (ablation + format) with a pinned,
-reference-aware lite judge, so the information-value curve reflects a real
-model's real behaviour: withhold the pathology report and the model can no
-longer state the diagnosis, etc. Requires GEMINI_API_KEY.
+Runs the `gemini_contract` battery (ablation + format) so the information-value
+curve reflects a real model's real behaviour: withhold the pathology report and
+the model can no longer state the diagnosis, etc. Grading is done by the judge
+the pack declares in `pack/judge.yaml` (pinned, reference-aware) — this script
+only orchestrates, so the judge each run pins is the judge that graded it.
+Requires GEMINI_API_KEY.
 """
 
 from __future__ import annotations
@@ -15,15 +17,11 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-from harness.execute import run_battery
-from harness.judge.llm import GradingConfig, LLMJudge
-from harness.models.sut import SUTBinding
-from harness.packio.loader import load_pack
-from harness.store.runstore import RunStore
+from validrig.execute import run_battery
+from validrig.packio.loader import load_pack
+from validrig.store.runstore import RunStore
 
 ROOT = Path(__file__).parent
-GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
-JUDGE_MODEL = "gemini-flash-lite-latest"  # fast, non-thinking; different from the SUT
 
 
 def main() -> int:
@@ -32,15 +30,12 @@ def main() -> int:
         return 1
     pack = load_pack(ROOT / "pack")
     store = RunStore(ROOT / "runs")
-    judge = LLMJudge(
-        SUTBinding(model_id=JUDGE_MODEL, model_version=JUDGE_MODEL,
-                   endpoint=GEMINI_ENDPOINT, api_key_env="GEMINI_API_KEY"),
-        GradingConfig(include_document=True, include_reference=True),
-    )
     battery = sys.argv[1] if len(sys.argv) > 1 else "gemini_contract"
+    judge_spec = pack.judge_for(battery)
     now = lambda: datetime.now(timezone.utc).replace(microsecond=0).isoformat()
-    print(f"Running {battery} (ablation) ...")
-    r = run_battery(pack, battery, store, seed=1, now=now, judge=judge)[0]
+    print(f"Running {battery} (ablation, judge={judge_spec.id} / "
+          f"{judge_spec.binding.get('model_id')}, declared in pack/judge.yaml) ...")
+    r = run_battery(pack, battery, store, seed=1, now=now)[0]
     print(f"\nrun={r.run_id} sut={r.sut_id} units={r.n_units} acceptance="
           f"{'PASS' if r.report['acceptance']['overall_pass'] else 'FAIL'}")
     print(f"\n=== INPUT CONTRACT on {r.sut_id} (real model, real data) ===")

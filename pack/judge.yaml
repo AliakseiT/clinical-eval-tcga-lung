@@ -1,5 +1,35 @@
-id: fake-judge
+# The judge is pack content: it is hashed into pack_hash -> run_id, and every
+# run pins the judge its battery declares. Declaring it here (rather than
+# constructing one in a run script) is what makes the pinned judge_id in a
+# dossier true.
+#
+# Default judge — the one that grades the real-model batteries. Reference-aware
+# G-Eval on Google's OpenAI-compatible endpoint. Only the NAME of the API-key
+# environment variable is stored; the key itself never enters the pack, the
+# hash, or any record.
+#
+# NOTE: Gemini judging Gemini is same-family bias — for production use a
+# different-family judge, or human calibration (which is what kappa is for).
+# `-latest` is a floating alias: the pin records the alias, not a resolved
+# model build. Pin an immutable model id for real reproducibility.
+id: geval-gemini-flash-lite
 version: "1"
-kind: fake
-binding: {}
+kind: openai_compat
+binding:
+  model_id: gemini-flash-lite-latest
+  model_version: gemini-flash-lite-latest
+  endpoint: https://generativelanguage.googleapis.com/v1beta/openai/chat/completions
+  api_key_env: GEMINI_API_KEY
+grading:
+  include_document: true # the judge sees the source record, to check grounding
+  include_reference: true # graded against the adjudicated reference
 calibration_fraction: 0.2
+
+# The offline judge, selected by the `smoke` battery in battery.yaml: it keeps
+# the instrument demo hermetic (no API key, no cost) and honest — a run graded
+# by the fake judge pins the fake judge.
+alternates:
+  - id: fake-judge
+    version: "1"
+    kind: fake
+    binding: {}

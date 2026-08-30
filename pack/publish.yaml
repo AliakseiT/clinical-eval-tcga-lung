@@ -22,8 +22,8 @@ data_note: >-
 
 diffs:
   swap:
-    baseline: 6af1207aa1ceae2b # gemini-2.5-flash, gemini_compare battery
-    candidate: d9c284c210c088b1 # gemini-3.5-flash, same pinned inputs
+    baseline: a36a296da0c5f9a2 # gemini-2.5-flash, gemini_compare battery
+    candidate: ec09ac6c7cfc2f4e # gemini-3.5-flash, same pinned inputs
 
 fact_files:
   deid: ../records/verification_validation/deid-recall-evaluation.json
@@ -48,11 +48,11 @@ arc:
   findings: |
     <p>We ran the same pinned contract battery on two Gemini generations. The headline: <strong>how much a model leans on the pathology report depends on the model version</strong> — which is exactly why the measurement has to be repeated on every swap.</p>
     <div class="table-wrap"><table class="data-table">
-    <thead><tr><th>Input document</th><th>{{run.fbb6b102ea4b33cd.sut}}</th><th>{{run.a4ec2e5573b1b0cd.sut}}</th><th>Reading</th></tr></thead>
+    <thead><tr><th>Input document</th><th>{{run.aa75fb2beedbe46e.sut}}</th><th>{{run.9d1cfd7827de6129.sut}}</th><th>Reading</th></tr></thead>
     <tbody>
-    <tr><td><strong>pathology_report</strong></td><td>{{run.fbb6b102ea4b33cd.element.pathology_report.information_value|.2f}}</td><td>{{run.a4ec2e5573b1b0cd.element.pathology_report.information_value|.2f}}</td><td>On {{run.a4ec2e5573b1b0cd.sut}}, scores did not drop at all when the report was withheld — the model produced a diagnosis and stage anyway, confabulating them. The older model used it only slightly more.</td></tr>
-    <tr><td><strong>clinical_summary</strong></td><td>{{run.fbb6b102ea4b33cd.element.clinical_summary.information_value|.2f}}</td><td>{{run.a4ec2e5573b1b0cd.element.clinical_summary.information_value|.2f}}</td><td>Barely used, by either model.</td></tr>
-    <tr><td><strong>molecular_report</strong></td><td>{{run.fbb6b102ea4b33cd.element.molecular_report.information_value|.2f}}</td><td>{{run.a4ec2e5573b1b0cd.element.molecular_report.information_value|.2f}}</td><td>The only input both models measurably rely on.</td></tr>
+    <tr><td><strong>pathology_report</strong></td><td>{{run.aa75fb2beedbe46e.element.pathology_report.information_value|.2f}}</td><td>{{run.9d1cfd7827de6129.element.pathology_report.information_value|.2f}}</td><td>On {{run.9d1cfd7827de6129.sut}}, scores did not drop at all when the report was withheld — the model produced a diagnosis and stage anyway, confabulating them. The older model used it only slightly more.</td></tr>
+    <tr><td><strong>clinical_summary</strong></td><td>{{run.aa75fb2beedbe46e.element.clinical_summary.information_value|.2f}}</td><td>{{run.9d1cfd7827de6129.element.clinical_summary.information_value|.2f}}</td><td>Barely used, by either model.</td></tr>
+    <tr><td><strong>molecular_report</strong></td><td>{{run.aa75fb2beedbe46e.element.molecular_report.information_value|.2f}}</td><td>{{run.9d1cfd7827de6129.element.molecular_report.information_value|.2f}}</td><td>The only input both models measurably rely on.</td></tr>
     </tbody>
     </table></div>
     <p><strong>Model-swap regression:</strong> re-running the pinned comparison battery, {{diff.swap.baseline_sut}} &rarr; {{diff.swap.candidate_sut}} showed a mean score delta of {{diff.swap.delta|.2f}} ({{diff.swap.n_regressions}} case-level regressions) — the gate PASSED. That is the point: the swap was verified, not assumed.</p>

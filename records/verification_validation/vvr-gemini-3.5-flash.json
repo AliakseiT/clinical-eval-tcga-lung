@@ -23,14 +23,14 @@
     "env_hash": "a9203a0f88ae880cb4fcbbc49141b948ffb98b2fdc1f1e5822c8c61a0435c4c8",
     "generated_by": "validrig 0.1.0",
     "model_version_note": "SUT and judge model_version are author-asserted. For a hosted endpoint that may update silently, pin a local model or record the provider's returned model id to keep this attestation trustworthy.",
-    "pinned_inputs_hash": "a4ec2e5573b1b0cd3e8fc831816f0686c8ed532d95d4840be87c017e23b38f80",
+    "pinned_inputs_hash": "9d1cfd7827de61293072aef24c1e2ac1fe00d736396e90ec35d79920fa01c57d",
     "pins": {
       "battery_id": "gemini_contract_35",
       "battery_version": "1",
       "engine_version": "0.1.0",
-      "judge_id": "fake-judge",
+      "judge_id": "geval-gemini-flash-lite",
       "judge_version": "1",
-      "pack_hash": "f5e1a10e72cff5e67dc4d8c021d1ad32f4bc095c8c8b7af3116fb9e22f4de2aa",
+      "pack_hash": "8aacabc15a74db73da592ce9d32472dee848e23c23a59a533f6d34c6b55df897",
       "pack_id": "tcga-lung",
       "pack_version": "0.1.0",
       "seed": 1,
@@ -39,8 +39,8 @@
     },
     "qms_baseline_repo": "AliakseiT/dearauditor-qms-baseline",
     "qms_baseline_tag": "QMS-2026-07-09-R005",
-    "rendered_at": "2026-08-30T17:08:47+00:00",
-    "run_id": "a4ec2e5573b1b0cd"
+    "rendered_at": "2026-08-30T21:20:36+00:00",
+    "run_id": "9d1cfd7827de6129"
   },
   "contract": {
     "artifact_type": "input_contract",
@@ -84,9 +84,9 @@
       "battery_id": "gemini_contract_35",
       "battery_version": "1",
       "engine_version": "0.1.0",
-      "judge_id": "fake-judge",
+      "judge_id": "geval-gemini-flash-lite",
       "judge_version": "1",
-      "pack_hash": "f5e1a10e72cff5e67dc4d8c021d1ad32f4bc095c8c8b7af3116fb9e22f4de2aa",
+      "pack_hash": "8aacabc15a74db73da592ce9d32472dee848e23c23a59a533f6d34c6b55df897",
       "pack_id": "tcga-lung",
       "pack_version": "0.1.0",
       "seed": 1,
@@ -95,13 +95,13 @@
     },
     "schema_version": 1
   },
-  "generated_at": "2026-08-30T17:08:47+00:00",
-  "intended_use": "Toy example: summarize a lung-adenocarcinoma record for a molecular tumor board, stating the histological diagnosis, clinical stage, and (where available) the actionable molecular alteration. Built on REAL, de-identified, public TCGA-LUAD data. FOR DEMONSTRATION / discussion with clinicians \u2014 not a clinical device.",
+  "generated_at": "2026-08-30T21:20:36+00:00",
+  "intended_use": "Demonstration pack: summarize a lung-adenocarcinoma record for a molecular tumor board, stating the histological diagnosis, clinical stage, and (where available) the actionable molecular alteration. Built on REAL, de-identified, public TCGA-LUAD data. FOR DEMONSTRATION / DISCUSSION WITH CLINICIANS \u2014 not a clinical device.",
   "product_id": "tcga-lung",
   "product_version": "0.1.0",
   "qms_baseline_tag": "QMS-2026-07-09-R005",
   "record_type": "validation_dossier",
-  "run_id": "a4ec2e5573b1b0cd",
+  "run_id": "9d1cfd7827de6129",
   "schema_version": 1,
   "signing": {
     "mechanism": "github_immutable_release (planned)",
@@ -135,7 +135,7 @@
       "linked_inputs": {
         "anomaly_records": [],
         "change_records": [],
-        "design_input_baseline_reference": "pack tcga-lung v0.1.0 (hash f5e1a10e72cff5e6)",
+        "design_input_baseline_reference": "pack tcga-lung v0.1.0 (hash 8aacabc15a74db73)",
         "design_traceability_reference": "",
         "requirements": [
           "item_diagnosis",
@@ -187,14 +187,14 @@
       "env_hash": "a9203a0f88ae880cb4fcbbc49141b948ffb98b2fdc1f1e5822c8c61a0435c4c8",
       "generated_by": "validrig 0.1.0",
       "model_version_note": "SUT and judge model_version are author-asserted. For a hosted endpoint that may update silently, pin a local model or record the provider's returned model id to keep this attestation trustworthy.",
-      "pinned_inputs_hash": "a4ec2e5573b1b0cd3e8fc831816f0686c8ed532d95d4840be87c017e23b38f80",
+      "pinned_inputs_hash": "9d1cfd7827de61293072aef24c1e2ac1fe00d736396e90ec35d79920fa01c57d",
       "pins": {
         "battery_id": "gemini_contract_35",
         "battery_version": "1",
         "engine_version": "0.1.0",
-        "judge_id": "fake-judge",
+        "judge_id": "geval-gemini-flash-lite",
         "judge_version": "1",
-        "pack_hash": "f5e1a10e72cff5e67dc4d8c021d1ad32f4bc095c8c8b7af3116fb9e22f4de2aa",
+        "pack_hash": "8aacabc15a74db73da592ce9d32472dee848e23c23a59a533f6d34c6b55df897",
         "pack_id": "tcga-lung",
         "pack_version": "0.1.0",
         "seed": 1,
@@ -203,8 +203,8 @@
       },
       "qms_baseline_repo": "AliakseiT/dearauditor-qms-baseline",
       "qms_baseline_tag": "QMS-2026-07-09-R005",
-      "rendered_at": "2026-08-30T17:08:47+00:00",
-      "run_id": "a4ec2e5573b1b0cd"
+      "rendered_at": "2026-08-30T21:20:36+00:00",
+      "run_id": "9d1cfd7827de6129"
     },
     "calibration": {
       "status": "not_collected"
@@ -264,8 +264,8 @@
       "execution_mode": "formal_release_candidate",
       "plan_reference": "VVP-tcga-lung-gemini_contract_35",
       "product_id": "tcga-lung",
-      "report_date": "2026-08-30T17:08:47+00:00",
-      "report_id": "VVR-tcga-lung-a4ec2e5573b1b0cd",
+      "report_date": "2026-08-30T21:20:36+00:00",
+      "report_id": "VVR-tcga-lung-9d1cfd7827de6129",
       "target_revision": "0.1.0 / SUT gemini-3.5-flash (hash 0f379816f189c131)"
     },
     "record_type": "verification_validation_report",

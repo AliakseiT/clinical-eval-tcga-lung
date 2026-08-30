@@ -5,10 +5,10 @@ demonstration for a lung-adenocarcinoma molecular tumor board. The whole repo is
 the example; the documents *inside* it (under `records/`) are stored exactly as
 they would be in a real deployment, not as "examples".
 
-It follows the factory's two-repo model: the **engine** ([harness-factory](https://github.com/AliakseiT/clinical-llm-eval-engine))
+It follows the factory's two-repo model: the **engine** ([validrig](https://github.com/AliakseiT/validrig))
 is use-case-agnostic; this **project repo** holds one intended use — a pack, an
 ingestion recipe, and (locally) its run outputs. It was scaffolded with
-`harness new`, then the synthetic pack was swapped for the TCGA one.
+`rig new`, then the synthetic pack was swapped for the TCGA one.
 
 ## Data provenance & license
 
@@ -44,33 +44,37 @@ derived from them is published.
 ## Build & run
 
 ```bash
-pip install harness-factory pypdf      # the engine (or: pip install -e ../factory)
+pip install validrig pypdf             # the engine (or: pip install -e ../factory)
 python ingest_tcga_lung.py             # rebuilds the 8 LUAD cases -> pack/casebank/cases/ (committed)
 
-harness lint pack
-harness run pack --battery smoke --out ./runs --seed 1
+rig lint pack
+rig run pack --battery smoke --out ./runs --seed 1
 # open runs/runs/<run_id>/contract.json  -> the input contract, measured on real data
-harness ui  pack --out ./runs           # adjudicate cases / calibrate (needs the [ui] extra)
+rig ui  pack --out ./runs           # adjudicate cases / calibrate (needs the [ui] extra)
 ```
 
 ## What this demonstrates (two distinct beats — keep them separate)
 
 1. **The instrument, on real inputs.** With the deterministic *fake* model + fake
-   judge, `harness run` extracts the **input contract** and information-value
+   judge, `rig run` extracts the **input contract** and information-value
    curves on real LUAD reports: pathology carries the diagnosis, the clinical
    summary carries the stage, the molecular report carries the driver. This shows
-   *what the harness measures* — it is **not** validating a model.
+   *what the rig measures* — it is **not** validating a model.
 2. **The validation beat.** A clinician blind-**adjudicates** cases in the review
    UI (that becomes the gold), then you point a **real model** at an
    OpenAI-compatible endpoint (`suts.yaml`) and get a signed validation report +
    regression diff against the physician's standard. ("You set the truth; the
-   harness measures the model against it.")
+   rig measures the model against it.")
 
 ## Real-model results (Google Gemini)
 
 Run against real Gemini models via the OpenAI-compatible endpoint (needs
-`GEMINI_API_KEY`; grading by a pinned, reference-aware `gemini-flash-lite-latest`
-judge). Two runnable scripts:
+`GEMINI_API_KEY`). Grading is done by the judge the pack declares in
+`pack/judge.yaml` — reference-aware `gemini-flash-lite-latest`, judge id
+`geval-gemini-flash-lite` — so every run below **pins the judge that graded it**,
+and swapping the judge changes `pack_hash` → `run_id`. The `smoke` battery selects
+the offline fake judge (`battery.yaml`), which is why it needs no key. The scripts
+only orchestrate. Two runnable scripts:
 
 ```bash
 GEMINI_API_KEY=... python run_gemini_eval.py       # validate + compare two models
@@ -94,7 +98,7 @@ scores and the override projection (never counted as a failure).
 
 **Input contract on the real model** (`gemini_contract` /
 `gemini_contract_35`, ablation, measured 2026-08-30 on the GDC-sourced
-casebank): information value —
+casebank; runs `aa75fb2beedbe46e` / `9d1cfd7827de6129`): information value —
 
 | Element | gemini-2.5-flash | gemini-3.5-flash |
 |---|---|---|
@@ -145,7 +149,7 @@ boundary + a per-type, measured, reproducible record; a higher-recall domain NER
 
 ### Enforced ingestion exists in the engine — but is not exercised here
 
-The engine ships an **enforced ingestion boundary** (`harness ingest`): raw case →
+The engine ships an **enforced ingestion boundary** (`rig ingest`): raw case →
 pseudonymize → casebank, with structured-field PII classes
 (`identifier` / `free_text` / `non_phi`) and a fail-closed residual gate that
 refuses to write a case if a declared identifier survives anywhere in it. Re-id
