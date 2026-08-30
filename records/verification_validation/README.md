@@ -16,4 +16,10 @@ Open the `.md` to read on GitHub; open the `.html` in a browser to print
 (Cmd/Ctrl-P). The `.json` is the structured record each is rendered from.
 
 All are **DRAFT / unsigned**; signer roles are clinical (medical + quality
-reviewer). Regenerate: `harness dossier …` (V&V) / `python run_deid_eval.py` (de-id).
+reviewer). Regenerate: `rig dossier …` (V&V) / `python run_deid_eval.py` (de-id).
+
+All records were regenerated 2026-08-30 from runs on the committed GDC-sourced
+casebank (runs `fbb6b102ea4b33cd` = gemini-2.5-flash `gemini_contract`,
+`a4ec2e5573b1b0cd` = gemini-3.5-flash `gemini_contract_35`, seed 1, judge
+`gemini-flash-lite-latest`, reference-aware), superseding the records generated
+from the earlier NC-ND-derived case text.

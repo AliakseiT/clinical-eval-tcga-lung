@@ -92,14 +92,27 @@ a monitoring "trend".) Note: LLM judging is non-deterministic, so an occasional
 transient `judge_error` occurs; it is recorded distinctly and **excluded** from
 scores and the override projection (never counted as a failure).
 
-**Input contract on the real model** (`gemini_contract`, gemini-2.5-flash,
-ablation): information value — `pathology_report` **0.00**, `clinical_summary`
-0.04, `molecular_report` **0.21**; minimal sufficient set = **`molecular_report`
-only**. Real finding worth discussing with clinicians: the model still states the
-diagnosis and stage *even when those inputs are withheld* (it infers them from
-context) — only the specific molecular driver genuinely requires its input. This
-is the opposite of the fake-model contract above, and surfaces a grounding /
-confabulation question the tumor board should weigh.
+**Input contract on the real model** (`gemini_contract` /
+`gemini_contract_35`, ablation, measured 2026-08-30 on the GDC-sourced
+casebank): information value —
+
+| Element | gemini-2.5-flash | gemini-3.5-flash |
+|---|---|---|
+| `pathology_report` | **0.083** | **0.000** |
+| `clinical_summary` | 0.083 | 0.083 |
+| `molecular_report` | **0.208** | **0.208** |
+| minimal sufficient set | all three | `clinical_summary` + `molecular_report` |
+
+Real finding worth discussing with clinicians — and it is **model-dependent**:
+gemini-3.5-flash still states the diagnosis *even when the pathology report is
+withheld* (it infers it from the remaining context — information value 0.000),
+while gemini-2.5-flash measurably degrades without it (0.083). The molecular
+driver genuinely requires its input on both models. The newer model's zero
+pathology information value is the grounding / confabulation question the tumor
+board should weigh. (Earlier revisions of this README reported the 2.5-flash
+contract as `pathology_report` 0.00 / minimal set `molecular_report` only —
+that was measured on the superseded NC-ND-derived case text and did not
+reproduce for 2.5-flash on the re-sourced GDC text.)
 
 **Monitoring, honestly:** M5 is already complete as an engine capability. A real
 validation run is **not** production telemetry, so `run_gemini_eval.py` prints a
