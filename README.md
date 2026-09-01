@@ -32,6 +32,12 @@ with attribution — so the built casebank **is committed** here:
   database of this data must also be ODbL). Cite Cerami et al., *Cancer Discov*
   2012 (PMID 22588877) and Gao et al., *Sci Signal* 2013 (PMID 23550210).
 
+These terms are recorded in [`LICENSE-DATA`](LICENSE-DATA), which states the
+ODbL 1.0 notice and full attribution block and names the covered files
+(`pack/casebank/cases/*.json`, as a database derived in part from cBioPortal
+data). Everything else in the repo is code/authored content under
+[`LICENSE`](LICENSE) — see [Licensing](#licensing).
+
 **Supersession note:** earlier revisions of the ingest recipe pulled report text
 from the `Lab-Rasool/TCGA` Hugging Face packaging (CC-BY-NC-ND 4.0), and cases
 were kept out of git for that reason. That dependency is removed; the same
@@ -176,6 +182,18 @@ that would make it meaningful.
 - Pathology text is extracted directly from the GDC open-access report PDFs —
   occasionally noisy; some reports were machine-translated at source.
 
+## Licensing
+
+- **Code and authored content** (ingest/run scripts, pack YAMLs, rubric, prose,
+  promoted V&V records): **AGPL-3.0-or-later**, same license as the
+  [validrig](https://github.com/AliakseiT/validrig) engine — full text in
+  [`LICENSE`](LICENSE).
+- **Casebank data** (`pack/casebank/cases/*.json`): a derived database under
+  **ODbL v1.0** (share-alike), with attribution to the TCGA Research
+  Network / GDC and cBioPortal (Cerami 2012, Gao 2013) — notice, covered
+  files, and attribution block in [`LICENSE-DATA`](LICENSE-DATA).
+
+License files live outside the parsed pack model, so adding or editing them
+does not change the `pack_hash` or invalidate pinned runs.
+
 FOR DEMONSTRATION AND DISCUSSION WITH CLINICIANS — not a clinical device.
-AGPL-3.0-or-later (this repo's code); case data per the provenance section above
-(GDC open-access TCGA-LUAD with attribution; cBioPortal under ODbL v1.0).

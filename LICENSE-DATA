@@ -1,0 +1,58 @@
+Data licence for the committed casebank
+========================================
+
+This notice covers the DATA in this repository, as distinct from its code and
+authored content (which are licensed under the GNU Affero General Public
+License v3.0 or later — see the LICENSE file).
+
+Covered files
+-------------
+
+    pack/casebank/cases/*.json
+
+These eight case files are a derived database: each combines, for one TCGA-LUAD
+patient, (a) pathology report text and clinical fields from the NCI Genomic
+Data Commons open-access tier and (b) molecular alteration data from the
+cBioPortal for Cancer Genomics public API (study `luad_tcga`), restructured
+into this pack's case schema by `ingest_tcga_lung.py`.
+
+Licence: Open Database License (ODbL) v1.0
+------------------------------------------
+
+Because the casebank incorporates cBioPortal data, which is made available
+under the Open Database License (ODbL) v1.0, the casebank as a derived
+database is likewise made available under the ODbL v1.0 (share-alike).
+
+The covered files are made available under the Open Database License:
+http://opendatacommons.org/licenses/odbl/1.0/. Any rights in individual
+contents of the database are licensed under the Database Contents License:
+http://opendatacommons.org/licenses/dbcl/1.0/.
+
+You are free to share, create from, and adapt this database, provided that
+you attribute (see below), share any derived database under the ODbL, and
+keep redistributions open (no technological restriction of a licensed copy
+without an unrestricted alternative).
+
+The full ODbL 1.0 text: https://opendatacommons.org/licenses/odbl/1-0/
+
+Attribution
+-----------
+
+- The results published here are in whole or part based upon data generated
+  by the TCGA Research Network (https://www.cancer.gov/tcga), project
+  TCGA-LUAD. Pathology report text and clinical fields were accessed via the
+  NCI Genomic Data Commons (GDC) Data Portal / REST API, open-access tier
+  (https://gdc.cancer.gov). GDC open-access data carries no usage restriction
+  beyond the TCGA publication/attribution guidelines.
+- Molecular alteration data were accessed via the cBioPortal for Cancer
+  Genomics (https://www.cbioportal.org/), study `luad_tcga`. Please cite:
+  * Cerami E et al. The cBio Cancer Genomics Portal: An Open Platform for
+    Exploring Multidimensional Cancer Genomics Data. Cancer Discovery,
+    2(5):401-404, 2012 (PMID 22588877).
+  * Gao J et al. Integrative analysis of complex cancer genomics and clinical
+    profiles using the cBioPortal. Science Signaling, 6(269):pl1, 2013
+    (PMID 23550210).
+
+Everything else in this repository (ingest and run scripts, pack YAMLs, the
+rubric, authored prose, promoted V&V records) is covered by the LICENSE file
+(AGPL-3.0-or-later), not by this data licence.
