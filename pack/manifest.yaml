@@ -1,10 +1,11 @@
 id: tcga-lung
 version: "0.1.0"
 intended_use: >
-  Toy example: summarize a lung-adenocarcinoma record for a molecular tumor board,
-  stating the histological diagnosis, clinical stage, and (where available) the
-  actionable molecular alteration. Built on REAL, de-identified, public TCGA-LUAD
-  data. FOR DEMONSTRATION / discussion with clinicians — not a clinical device.
+  Demonstration pack: summarize a lung-adenocarcinoma record for a molecular tumor
+  board, stating the histological diagnosis, clinical stage, and (where available)
+  the actionable molecular alteration. Built on REAL, de-identified, public
+  TCGA-LUAD data. FOR DEMONSTRATION / DISCUSSION WITH CLINICIANS — not a clinical
+  device.
 device_status_rationale: >
   Demonstration configuration on public de-identified research data (TCGA). Not
   placed on the market or put into service for a clinical purpose.

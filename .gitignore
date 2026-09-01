@@ -1,7 +1,3 @@
-# Built case data is NOT committed — TCGA text is CC-BY-NC-ND. Rebuild it locally
-# with `python ingest_tcga_lung.py`. Only the recipe + pack schema are versioned.
-pack/casebank/cases/*.json
-
 # Run outputs (project data)
 runs/
 *.parquet

@@ -1,11 +1,15 @@
 batteries:
-  # Offline instrument demo (fake model): input contract + info-value on real data.
+  # Offline instrument demo (fake model + fake judge): input contract + info-value
+  # on real data, with no API key and no cost. `judge:` selects the offline judge
+  # declared under `alternates:` in judge.yaml; every other battery grades with
+  # the pack's default (real) judge.
   - id: smoke
     version: "1"
     cases: all
     perturbations: all
     axes: ["ablation", "format"]
     suts: ["fake-baseline"]
+    judge: fake-judge
     n_samples: 1
 
   # Quick real-model inspection: one model, baseline only (no ablation), 8 units.
@@ -25,6 +29,15 @@ batteries:
     perturbations: all
     axes: ["ablation", "format"]
     suts: ["gemini-2.5-flash"]
+    n_samples: 1
+
+  # Same contract battery on the newer model version, for a second dossier.
+  - id: gemini_contract_35
+    version: "1"
+    cases: all
+    perturbations: all
+    axes: ["ablation", "format"]
+    suts: ["gemini-3.5-flash"]
     n_samples: 1
 
   # Real model comparison (a model *change* -> RegressionDiff): stronger vs weaker.

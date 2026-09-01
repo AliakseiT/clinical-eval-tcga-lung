@@ -3,8 +3,9 @@
 """Real-model demo: validate + compare two Gemini models on the TCGA-LUAD pack.
 
 Runs `gemini_compare` (gemini-2.5-flash vs gemini-3.5-flash) via Google's
-OpenAI-compatible endpoint, grades the free-text output with a pinned,
-reference-aware LLM judge, and produces:
+OpenAI-compatible endpoint, graded by the judge the pack declares in
+`pack/judge.yaml` (pinned, reference-aware) — this script only orchestrates, so
+the judge each run pins is the judge that graded it. It produces:
   1. per-model validation scores,
   2. a RegressionDiff between the two models (a model swap is a CHANGE event,
      not a temporal trend) + a QMS change request,
@@ -23,19 +24,14 @@ import os
 from datetime import datetime, timezone
 from pathlib import Path
 
-from harness.diff import diff_runs
-from harness.execute import run_battery
-from harness.judge.llm import GradingConfig, LLMJudge
-from harness.models.sut import SUTBinding
-from harness.packio.loader import load_pack
-from harness.qms.mappers import build_change_request
-from harness.store.runstore import RunStore
+from validrig.diff import diff_runs
+from validrig.execute import run_battery
+from validrig.packio.loader import load_pack
+from validrig.qms.mappers import build_change_request
+from validrig.store.runstore import RunStore
 
 ROOT = Path(__file__).parent
-GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
-# Pinned judge. NOTE: Gemini judging Gemini is same-family bias — for production
-# use a different-family judge, or human calibration (which is what kappa is for).
-JUDGE_MODEL = "gemini-flash-lite-latest"
+BATTERY = "gemini_compare"
 
 
 def _clock():
@@ -50,14 +46,10 @@ def main() -> int:
     pack = load_pack(ROOT / "pack")
     store = RunStore(ROOT / "runs")
 
-    judge = LLMJudge(
-        SUTBinding(model_id=JUDGE_MODEL, model_version=JUDGE_MODEL,
-                   endpoint=GEMINI_ENDPOINT, api_key_env="GEMINI_API_KEY"),
-        GradingConfig(include_document=True, include_reference=True),
-    )
-
-    print(f"Running gemini_compare (judge={JUDGE_MODEL}, reference-aware) ...")
-    results = run_battery(pack, "gemini_compare", store, seed=1, now=_clock, judge=judge)
+    judge_spec = pack.judge_for(BATTERY)
+    print(f"Running {BATTERY} (judge={judge_spec.id} / "
+          f"{judge_spec.binding.get('model_id')}, declared in pack/judge.yaml) ...")
+    results = run_battery(pack, BATTERY, store, seed=1, now=_clock)
     by_sut = {r.sut_id: r for r in results}
 
     print("\n=== per-model validation (baseline, real TCGA-LUAD) ===")
