@@ -17,7 +17,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from harness.ingest.deid_eval import PhiItem, measure_deid, render_deid_md
+from validrig.ingest.deid_eval import PhiItem, measure_deid, render_deid_md
 
 ROOT = Path(__file__).parent
 CASES = ROOT / "pack" / "casebank" / "cases"
@@ -50,7 +50,7 @@ def _notes() -> list[str]:
 def main() -> int:
     import os
     os.environ.setdefault("HARNESS_REID_KEY", "demo-reid-key-01")  # throwaway demo AES key
-    from harness.ingest.presidio_backend import PresidioPseudonymizer
+    from validrig.ingest.presidio_backend import PresidioPseudonymizer
 
     notes = _notes()
     if not notes:
